@@ -11,8 +11,13 @@ def moveQueen(row):
         if j ==SIZE:
             return False
         else:
-            board[row][j] = 1
-            return True
+            new_space = findSpaceAt(row, j)
+            if new_space != 1:
+                board[row][new_space] = 1
+                return True
+            else:
+                pring("something went wrong")
+                return False
     else:
         j = findSpaceAt(row)
         if j != -1:
@@ -22,9 +27,9 @@ def moveQueen(row):
             return False
 
 
-def findSpaceAt(row):
+def findSpaceAt(row, col=0):
     possible_space = -1
-    j = 0
+    j = col
     while j < SIZE:
         vertical = searchAt(row,j,0)
         p45 = searchAt(row,j,1)
