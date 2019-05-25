@@ -22,8 +22,44 @@ class Suduku:
 				print('-------------------')
 			print(row)
 			i += 1
+	def check_number(self, i, j, number):
+		return self.__check_row(i, number) or self.__check_column(j, number) or self.__check_square(i, j, number)
+	def __check_row(self, i, number):
+		j = 0
+		while j < self.SIZE:
+			if(self.board[i][j] == number):
+				return False
+			j +=1
+		return True
+	def __check_column(self, j, number):
+		i = 0
+		while i < self.SIZE:
+			if(self.board[i][j] == number):
+				return False
+			i +=1
+		return True
+	def __check_square(self, i, j, number):
+		temp_i = i//3
+		temp_j = j//3
+		limit_i = temp_i + 3
+		limit_j = temp_j + 3
+		# print(temp_i)
+		# print(temp_j)
+		# print(limit_i)
+		# print(limit_j)
+		print('checking_squares')
+		while temp_i < limit_i:
+			print('i={};limit={} {}'.format(temp_i, limit_itemp_i < limit_i))
+			while temp_j < limit_j:
+				print('i={};limit={} {}'.format(temp_i, limit_itemp_i < limit_i))
+				# print(temp_j < limit_j)
+				if(self.board[temp_i][temp_j] == number):
+					return False
+				temp_j += 1
+			temp_i += 1
 
-	# def check_number(self, i, j, number):
+		return True
+
 
 
 initial_data = \
@@ -42,4 +78,4 @@ s1 = Suduku(initial_data)
 s1.printBoard()
 # initializeBoard(board, initial_data)
 
-# printBoard(board)
+print(s1.check_number(1,1,8))
