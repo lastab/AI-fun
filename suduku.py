@@ -23,6 +23,8 @@ class Suduku:
 			print(row)
 			i += 1
 	def check_number_already_present(self, i, j, number):
+		if (not self.board[i][j] == 0):
+			return True
 		return self.__check_row_already_present(i, number) or self.__check_column_already_present(j, number) or self.__check_square(i, j, number)
 	def __check_row_already_present(self, i, number):
 		j = 0
@@ -36,7 +38,7 @@ class Suduku:
 		while i < self.SIZE:
 			if(self.board[i][j] == number):
 				return True
-			i +=1
+			i += 1
 		return False
 	def __check_square(self, i, j, number):
 		temp_i = i//3
@@ -51,7 +53,22 @@ class Suduku:
 			temp_i += 1
 		return False
 
+	def set_number(self, i, j, number):
+		if(self.board[i][j] == 0):
+			self.board[i][j] = number 
 
+	def board_filled(self):
+		count = 0
+		i = 0
+		while i < self.size:
+			j = 0
+			while j < self.size:
+				if(self.board[i][j] == 0):
+					count +=1
+				j += 1
+
+			i += 1
+		return count > 0
 initial_data = \
 	[\
 		0, 0, 1, 9, 8, 4, 7, 6, 0,\
@@ -67,7 +84,22 @@ initial_data = \
 s1 = Suduku(initial_data)
 s1.printBoard()
 # initializeBoard(board, initial_data)
-i=1
-while i < 10:
-	print(s1.check_number_already_present(0,0,i))
-	i  += 1
+while s1.board_filled:
+
+	i = 0
+	while i < 9:
+		j = 0
+		while j < 9:
+			possible_numbers = []
+			number = 1
+			while number < 10:
+				if(not s1.check_number_already_present(i, j, number) == True):
+					possible_numbers.append(number)
+				number  += 1
+			print(i, j, possible_numbers)
+			if(len(possible_numbers) == 1):
+				s1.set_number(i, j, possible_numbers[0])
+			j += 1
+		i += 1
+
+	s1.printBoard()
